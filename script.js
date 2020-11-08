@@ -3,7 +3,7 @@ var cityListEl = $(".list-group");
     console.log(cityListEl)
 var citySearchEl = $("#citySearch")
     console.log(citySearchEl)
-    console.log(citySearchEl.val())
+    console.log(citySearchEl.val().trim().toLowerCase())
 var searchButtonEl = $(".fa-search");
     console.log(searchButtonEl)
 // Assemble: Create/select global variables 
@@ -20,29 +20,38 @@ function renderCities(){
 };
 
 //CLICK FUNCTIONALITY
-searchButtonEl.on("click", function(event) {
+var newCity = searchButtonEl.on("click", function(event) {
     event.preventDefault();
     console.log(this)
+    
+// This line of code will grab the input from the `citySearchEl`
+    // var cityLower = citySearchEl.val().trim().toLowerCase();
+    //     console.log(cityLower)
+     var cityCapitalized = citySearchEl.val().trim();
+        console.log(cityCapitalized)
+// The city from the `citySearchEl` is then added to our array
+    citiesArray.push(cityCapitalized);
 
-    // This line of code will grab the input from the `citySearchEl`
-    var city = citySearchEl.val().trim();
-        console.log(city)
-
-    // The city from the `citySearchEl` is then added to our array
-    citiesArray.push(city);
-
-    // Calling renderButtons which handles the processing of our movie array
+// Calling renderButtons which handles the processing of our `citiesArray`
     renderCities();
-  });
+    getWeather(cityCapitalized);
+    return
+});
 
+console.log(newCity)
 
 
   //AJAX CODE HERE
-function getWeather() {
-
-    var cityName = $(this).val();
+function getWeather(cityVar) {
+    // console.log(this)
+    // console.log($(this))
+    var cityName = cityVar;
+    // var cityName = "Atlanta";
+        console.log($(cityName))
+        console.log(cityName)
     var apiKey = "85855026c109c5b4381b76fd68c05b8e"
     var queryURL = "https://api.openweathermap.org/data/2.5/weather?q="+ cityName + "&appid=" + apiKey;
+    console.log(queryURL)
 
     $.ajax({
         url: queryURL,
