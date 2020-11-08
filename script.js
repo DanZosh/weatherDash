@@ -53,6 +53,8 @@ function storeCityArray(){
 }
 
 function renderCities(){
+//CLEAR the list on the page so we don't duplicate cities
+    $(cityListEl).empty();
 //FOR each city in the list, RENDER the city to the page
     for (let i = 0; i < citiesArray.length; i++) {
         var city = citiesArray[i];
@@ -99,7 +101,7 @@ function getWeather(cityVar) {
     }).then(function(response) {
         console.log(response)
     // SET the `mainCard` ITEMS TO THE RESPONSE VALUES
-  
+
             currentCity.name = response.name
             currentCity.temperature = response.main.temp
             currentCity.humidity = response.main.humidity
@@ -107,23 +109,6 @@ function getWeather(cityVar) {
             currentCity.uvIndex = response.clouds.all
                 console.log(currentCity)
 
-
-            // console.log(mainCardCity.text())
-            // console.log(mainCardTemperature.text())
-            // console.log(mainCardHumidity.text())
-            // console.log(mainCardWindSpeed).text()
-            // console.log(mainCardUVIndex.text())
-
-        // $(mainCardCity).replaceWith(response.name);
-        //     console.log(mainCardCity)
-        // $(mainCardTemperature).replaceWith(response.main.temp);
-        //     console.log(mainCardTemperature)
-        // mainCardHumidity = response.main.humidity;
-        //     console.log(mainCardHumidity)
-        // mainCardWindSpeed = response.wind.speed;
-        //     console.log(mainCardWindSpeed)
-        // mainCardUVIndex = response.clouds.all;
-        //     console.log(mainCardUVIndex)
         renderMainCard()
         storeCity(currentCity.name)
     });
