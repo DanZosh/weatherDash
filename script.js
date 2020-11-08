@@ -6,9 +6,51 @@ var citySearchEl = $("#citySearch")
     console.log(citySearchEl.val().trim().toLowerCase())
 var searchButtonEl = $(".fa-search");
     console.log(searchButtonEl)
+
+//THESE ARE THE CARD DOM ELEMENTS
+    var mainCardCity = $(".mainCardCity");
+        console.log(mainCardCity)
+    var mainCardTemperature = $(".mainCardTemperature");
+        console.log(mainCardTemperature)
+    var mainCardHumidity = $(".mainCardHumidity");
+        console.log(mainCardHumidity)
+    var mainCardWindSpeed = $(".mainCardWindSpeed");
+        console.log(mainCardWindSpeed)
+    var mainCardUVIndex = $(".mainCardUVIndex");
+        console.log(mainCardUVIndex)
+
 // Assemble: Create/select global variables 
 // var citiesArray = ["Austin", "Chicago", "New York", "Orlando", "San Francisco", "Seattle", "Denver", "atlanta"]
 var citiesArray = []
+    console.log(citiesArray)
+var currentCity = {
+    name:"",
+    temperature:"",
+    humidity:"",
+    windSpeed:"",
+    uvIndex:"",
+}
+        console.log(currentCity)
+
+    init();
+    //CHECK if there are already items stored in local storage.
+    function init(){
+        var storedCurrentCity = localStorage.getItem("locallyStoredCurrentCity");
+            console.log(storedCurrentCity);
+        if (storedCurrentCity && storedCurrentCity !== ""){
+        //if true, then, replace currentCity with storedCurrentCity
+        currentCity=JSON.parse(storedCurrentCity);
+            
+        }
+        // renderMainCard();
+    }
+
+function storeCity(boop){
+    localStorage.setItem(`${boop}`, JSON.stringify(currentCity)); 
+}
+function storeCityArray(){
+    localStorage.setItem("storedCitiesArray", JSON.stringify(citiesArray)); 
+}
 
 function renderCities(){
 //FOR each city in the list, RENDER the city to the page
@@ -35,10 +77,9 @@ var newCity = searchButtonEl.on("click", function(event) {
 // Calling renderButtons which handles the processing of our `citiesArray`
     renderCities();
     getWeather(cityCapitalized);
+    storeCity(cityCapitalized)
     return
 });
-
-console.log(newCity)
 
 
   //AJAX CODE HERE
@@ -47,7 +88,6 @@ function getWeather(cityVar) {
     // console.log($(this))
     var cityName = cityVar;
     // var cityName = "Atlanta";
-        console.log($(cityName))
         console.log(cityName)
     var apiKey = "85855026c109c5b4381b76fd68c05b8e"
     var queryURL = "https://api.openweathermap.org/data/2.5/weather?q="+ cityName + "&appid=" + apiKey;
@@ -58,5 +98,49 @@ function getWeather(cityVar) {
         method: "GET"
     }).then(function(response) {
         console.log(response)
+    // SET the `mainCard` ITEMS TO THE RESPONSE VALUES
+  
+            currentCity.name = response.name
+            currentCity.temperature = response.main.temp
+            currentCity.humidity = response.main.humidity
+            currentCity.windSpeed = response.wind.speed
+            currentCity.uvIndex = response.clouds.all
+                console.log(currentCity)
+
+
+            // console.log(mainCardCity.text())
+            // console.log(mainCardTemperature.text())
+            // console.log(mainCardHumidity.text())
+            // console.log(mainCardWindSpeed).text()
+            // console.log(mainCardUVIndex.text())
+
+        // $(mainCardCity).replaceWith(response.name);
+        //     console.log(mainCardCity)
+        // $(mainCardTemperature).replaceWith(response.main.temp);
+        //     console.log(mainCardTemperature)
+        // mainCardHumidity = response.main.humidity;
+        //     console.log(mainCardHumidity)
+        // mainCardWindSpeed = response.wind.speed;
+        //     console.log(mainCardWindSpeed)
+        // mainCardUVIndex = response.clouds.all;
+        //     console.log(mainCardUVIndex)
+        renderMainCard()
+        storeCity(currentCity.name)
     });
 };
+function renderMainCard(){
+    console.log(currentCity.name)
+    $(mainCardCity).append($("<p>").text("City Name: "+currentCity.name));
+    $(mainCardTemperature).append($("<p>").text("Temperature: "+currentCity.temperature));
+    $(mainCardHumidity).append($("<p>").text("Humidity: "+currentCity.humidity));
+    $(mainCardWindSpeed).append($("<p>").text("Wind Speed: "+currentCity.windSpeed));
+    $(mainCardUVIndex).append($("<p>").text("UV Index: "+currentCity.uvIndex));
+    };
+
+var clearButtonEl = $(".clearButton")
+console.log(clearButtonEl)
+clearButtonEl.on("click", function(event) {
+    // localStorage.setItem("locallyStoredTimeArray", JSON.stringify([]));
+    localStorage.clear();
+    window.location.reload();
+});
