@@ -2,5 +2,6 @@
 
 
 // Assemble: Create/select global variables 
+var citiesArray = []
 
 
