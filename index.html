@@ -30,33 +30,24 @@
   </head>
 
   <body>
-
+<!-- THIS IS THE JUMBOTRON -->
     <div class="jumbotron jumbotron-fluid m-0 p-1">
       <div class="container">
         <h1 class="display-4 text-center">weatherDash</h1>
       </div>
     </div> 
-
+<!-- THIS IS THE MAIN -->
     <div class="container m-0">
-
       <div class="row">
         <div class="col-3 bg-light">Search for a City:
           <div class="input-group mb-4">
-            <input type="text" class="form-control" placeholder="" aria-label="Recipient's username" aria-describedby="button-addon2">
+            <input type="text" class="form-control" placeholder="" aria-label="Recipient's username" aria-describedby="button-addon2" id="citySearch">
             <div class="input-group-append">
-              <button class="btn btn-outline-secondary bg-primary text-white" type="button" id="button-addon2">Button</button>
+              <button class="btn btn-outline-secondary bg-primary text-white fas fa-search" type="button" id="button-addon2" ></button>
             </div>
           </div>
-          <ul class="list-group">
-            <li class="list-group-item">Cras justo odio</li>
-            <li class="list-group-item">Dapibus ac facilisis in</li>
-            <li class="list-group-item">Morbi leo risus</li>
-            <li class="list-group-item">Porta ac consectetur ac</li>
-            <li class="list-group-item">Vestibulum at eros</li>
-            <li class="list-group-item">Vestibulum at eros</li>
-            <li class="list-group-item">Vestibulum at eros</li>
-            <li class="list-group-item">Vestibulum at eros</li>
-          </ul>
+<!-- ITEMS IN THE UNORDERED LIST ARE DYNAMICALLY GENERATED -->
+          <ul class="list-group"></ul>
         </div>
 
 
