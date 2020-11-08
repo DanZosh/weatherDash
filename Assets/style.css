@@ -6,6 +6,11 @@
     --dark_grey: #9999a0;
     --jumbotron_grey: #343a40;
 }
-.future{
-    flex-direction: row;
+.jumbotron{
+    background-color: var(--jumbotron_grey);
+    color: var(--white);
+}
+.m-0{
+    max-width: 100%;
+    padding-right: 0;
 }
