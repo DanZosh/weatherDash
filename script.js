@@ -19,7 +19,9 @@ var clearButtonEl = $(".clearButton")
         // console.log(mainCardWindSpeed)
     var mainCardUVIndex = $(".mainCardUVIndex");
         // console.log(mainCardUVIndex)
-
+//THESE ARE THE FORECAST DOM ELEMENTS        
+    var fiveDayForecastEl = $("#fiveDayForecastEl")
+        console.log(fiveDayForecastEl)
 // Assemble: Create/select global variables 
 // var citiesArray = ["Austin", "Chicago", "New York", "Orlando", "San Francisco", "Seattle", "Denver", "atlanta"]
 var citiesArray = []
@@ -39,6 +41,7 @@ var nextDaysTemp= []
     console.log(nextDaysTemp)
 var nextDaysHumidity= []
     console.log(nextDaysHumidity)
+
 
 //START
     init();
@@ -184,7 +187,7 @@ function getFutureWeather(cityVar) {
         //GET the unix dates
         for (let i = 0; i < 40; i+=8) {
 //GET the next unix dates and convert to something readable
-            var nextDate = moment(response.list[i].dt,"X").format("MMM Do, YYYY HH");
+            var nextDate = moment(response.list[i].dt,"X").format("MMM Do, YYYY");
                 console.log(nextDate);
             nextDaysDate.push(nextDate);
 // GET the next temperatures and convert to F
@@ -199,23 +202,32 @@ function getFutureWeather(cityVar) {
             console.log(nextDaysDate)
             console.log(nextDaysTemp)
             console.log(nextDaysHumidity)
+            renderFutureWeather()
     });
 };
 
-// (Math.ceil((currentCity.temperature - 273.15) * 1.80 + 32))
-// TEST JUNK BELOW
-// timeVar=1549312452
-// convertUnix()
-// // function convertUnix(timeVar){
-//     var unixFormat = moment(1604901600,"X")
-//     // console.log(unixFormat.format("X"))
-//     console.log(unixFormat.format("MMM Do, YYYY HH"));    var unixFormat = moment(1604912400,"X")
-//     // console.log(unixFormat.format("X"))
-//     console.log(unixFormat.format("MMM Do, YYYY HH"));    var unixFormat = moment(1604923200,"X")
-//     // console.log(unixFormat.format("X"))
-//     console.log(unixFormat.format("MMM Do, YYYY HH"));    var unixFormat = moment(1604934000,"X")
-//     // console.log(unixFormat.format("X"))
-//     console.log(unixFormat.format("MMM Do, YYYY HH"));    var unixFormat = moment(1604944800,"X")
-//     // console.log(unixFormat.format("X"))
-//     console.log(unixFormat.format("MMM Do, YYYY HH"));
-// }
+//RENDER future weather
+function renderFutureWeather(){
+//LOOP through the `datei` cards and append with matching index of `nextDaysDate`
+    for (let i = 0; i < 5; i++) {
+        $("#date"+i).innerHTML="";
+        $("#date"+i).empty()
+        $("#date"+i).append($("<p>").text(nextDaysDate[i]))
+        
+    }
+//LOOP through the `tempi` cards and append with matching index of `nextDaysTemp`
+    for (let i = 0; i < 5; i++) {
+        $("#temp"+i).innerHTML="";
+        $("#temp"+i).empty()
+        $("#temp"+i).append($("<p>").text("Temp: "+nextDaysTemp[i]+" F"))
+        
+    }
+//LOOP through the `humidityi` cards and append with matching index of `nextDaysHumidity`
+    for (let i = 0; i < 5; i++) {
+        $("#humidity"+i).innerHTML="";
+        $("#humidity"+i).empty()
+        $("#humidity"+i).append($("<p>").text("Humidity: "+nextDaysHumidity[i]+" %"))
+        
+    }
+
+    };
