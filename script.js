@@ -1,24 +1,24 @@
 // Assemble: Create/select DOM elements
 var cityListEl = $(".list-group");
-    console.log(cityListEl)
+    // console.log(cityListEl)
 var citySearchEl = $("#citySearch")
-    console.log(citySearchEl)
-    console.log(citySearchEl.val().trim().toLowerCase())
+    // console.log(citySearchEl)
+    // console.log(citySearchEl.val().trim().toLowerCase())
 var searchButtonEl = $(".fa-search");
-    console.log(searchButtonEl)
+    // console.log(searchButtonEl)
 var clearButtonEl = $(".clearButton")
-    console.log(clearButtonEl)
+    // console.log(clearButtonEl)
 //THESE ARE THE CARD DOM ELEMENTS
     var mainCardCity = $(".mainCardCity");
-        console.log(mainCardCity)
+        // console.log(mainCardCity)
     var mainCardTemperature = $(".mainCardTemperature");
-        console.log(mainCardTemperature)
+        // console.log(mainCardTemperature)
     var mainCardHumidity = $(".mainCardHumidity");
-        console.log(mainCardHumidity)
+        // console.log(mainCardHumidity)
     var mainCardWindSpeed = $(".mainCardWindSpeed");
-        console.log(mainCardWindSpeed)
+        // console.log(mainCardWindSpeed)
     var mainCardUVIndex = $(".mainCardUVIndex");
-        console.log(mainCardUVIndex)
+        // console.log(mainCardUVIndex)
 
 // Assemble: Create/select global variables 
 // var citiesArray = ["Austin", "Chicago", "New York", "Orlando", "San Francisco", "Seattle", "Denver", "atlanta"]
@@ -33,8 +33,11 @@ var currentCity = {
     lat:"",
     lon:"",
 }
-        console.log(currentCity)
+var nextDays= []
+    console.log(nextDays)
 
+
+//START
     init();
     //CHECK if there is already a `storedCitiesArray` in local storage.
     function init(){
@@ -82,7 +85,7 @@ var newCity = searchButtonEl.on("click", function(event) {
 // Calling renderButtons which handles the processing of our `citiesArray`
     renderCities();
     getWeather(cityCapitalized);
-    // getFutureWeather(cityVar)
+    getFutureWeather(cityCapitalized)
     storeCity(cityCapitalized);
     storeCityArray();
     return
@@ -90,10 +93,7 @@ var newCity = searchButtonEl.on("click", function(event) {
 
 //GET weather conditions
 function getWeather(cityVar) {
-    // console.log(this)
-    // console.log($(this))
     var cityName = cityVar;
-    // var cityName = "Atlanta";
         console.log(cityName)
     var apiKey = "85855026c109c5b4381b76fd68c05b8e"
     var queryURL = "https://api.openweathermap.org/data/2.5/weather?q="+ cityName + "&appid=" + apiKey;
@@ -168,7 +168,6 @@ clearButtonEl.on("click", function(event) {
 //GET Forecast weather
 function getFutureWeather(cityVar) {
     var cityName = cityVar;
-    // var cityName = "Atlanta";
         console.log(cityName)
     var apiKey = "85855026c109c5b4381b76fd68c05b8e"
     var queryURL = "https://api.openweathermap.org/data/2.5/forecast?q="+ cityName + "&appid=" + apiKey;
@@ -178,6 +177,31 @@ function getFutureWeather(cityVar) {
         url: queryURL,
         method: "GET"
     }).then(function(response) {
-        console.log(response)
+        console.log(response.list)
+        //GET the unix dates
+        for (let i = 0; i < 40; i+=8) {
+            var element = moment(response.list[i].dt,"X").format("MMM Do, YYYY HH");
+                console.log(element);
+            nextDays.push(element);
+        }
+            console.log(nextDays)
+
     });
 };
+
+// TEST JUNK BELOW
+// timeVar=1549312452
+// convertUnix()
+// // function convertUnix(timeVar){
+//     var unixFormat = moment(1604901600,"X")
+//     // console.log(unixFormat.format("X"))
+//     console.log(unixFormat.format("MMM Do, YYYY HH"));    var unixFormat = moment(1604912400,"X")
+//     // console.log(unixFormat.format("X"))
+//     console.log(unixFormat.format("MMM Do, YYYY HH"));    var unixFormat = moment(1604923200,"X")
+//     // console.log(unixFormat.format("X"))
+//     console.log(unixFormat.format("MMM Do, YYYY HH"));    var unixFormat = moment(1604934000,"X")
+//     // console.log(unixFormat.format("X"))
+//     console.log(unixFormat.format("MMM Do, YYYY HH"));    var unixFormat = moment(1604944800,"X")
+//     // console.log(unixFormat.format("X"))
+//     console.log(unixFormat.format("MMM Do, YYYY HH"));
+// }
