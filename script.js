@@ -40,14 +40,14 @@ var currentCity = {
         if (storedCitiesArray && storedCitiesArray !== ""){
         //if true, then, replace `citiesArray` with `storedCitiesArray`
         citiesArray=JSON.parse(storedCitiesArray);
-            
         }
         renderCities();
     }
-
+//STORE locally the current `currentCity`
 function storeCity(boop){
     localStorage.setItem(`${boop}`, JSON.stringify(currentCity)); 
 }
+//STORE locally our `citiesArray`
 function storeCityArray(){
     localStorage.setItem("storedCitiesArray", JSON.stringify(citiesArray)); 
 }
@@ -84,8 +84,7 @@ var newCity = searchButtonEl.on("click", function(event) {
     return
 });
 
-
-  //AJAX CODE HERE
+//GET weather conditions
 function getWeather(cityVar) {
     // console.log(this)
     // console.log($(this))
@@ -115,6 +114,8 @@ function getWeather(cityVar) {
         storeCityArray();
     });
 };
+
+//RENDER the content to the MAIN CARD FOR CURRENT WEATHER
 function renderMainCard(){
     console.log(currentCity.name)
     //DAN NOTE: there is an opportunity here to create an array and do a for loop for all these short functions; low priority, get it functioning first and come back if you can.
@@ -125,15 +126,15 @@ function renderMainCard(){
 
     mainCardTemperature.innerHTML="";
     $(mainCardTemperature).empty()
-    $(mainCardTemperature).append($("<p>").text("Temperature: "+currentCity.temperature));
+    $(mainCardTemperature).append($("<p>").text("Temperature: "+(Math.ceil((currentCity.temperature - 273.15) * 1.80 + 32))+"F"));
 
     mainCardHumidity.innerHTML="";
     $(mainCardHumidity).empty()
-    $(mainCardHumidity).append($("<p>").text("Humidity: "+currentCity.humidity));
+    $(mainCardHumidity).append($("<p>").text("Humidity: "+currentCity.humidity+"%"));
 
     mainCardWindSpeed.innerHTML="";
     $(mainCardWindSpeed).empty()
-    $(mainCardWindSpeed).append($("<p>").text("Wind Speed: "+currentCity.windSpeed));
+    $(mainCardWindSpeed).append($("<p>").text("Wind Speed: "+currentCity.windSpeed+" MPH"));
 
     mainCardUVIndex.innerHTML="";
     $(mainCardUVIndex).empty()
