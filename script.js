@@ -6,7 +6,8 @@ var citySearchEl = $("#citySearch")
     console.log(citySearchEl.val().trim().toLowerCase())
 var searchButtonEl = $(".fa-search");
     console.log(searchButtonEl)
-
+var clearButtonEl = $(".clearButton")
+    console.log(clearButtonEl)
 //THESE ARE THE CARD DOM ELEMENTS
     var mainCardCity = $(".mainCardCity");
         console.log(mainCardCity)
@@ -29,6 +30,8 @@ var currentCity = {
     humidity:"",
     windSpeed:"",
     uvIndex:"",
+    lat:"",
+    lon:"",
 }
         console.log(currentCity)
 
@@ -79,6 +82,7 @@ var newCity = searchButtonEl.on("click", function(event) {
 // Calling renderButtons which handles the processing of our `citiesArray`
     renderCities();
     getWeather(cityCapitalized);
+    // getFutureWeather(cityVar)
     storeCity(cityCapitalized);
     storeCityArray();
     return
@@ -101,18 +105,31 @@ function getWeather(cityVar) {
     }).then(function(response) {
         console.log(response)
     // SET the `mainCard` ITEMS TO THE RESPONSE VALUES
-
             currentCity.name = response.name
             currentCity.temperature = response.main.temp
             currentCity.humidity = response.main.humidity
             currentCity.windSpeed = response.wind.speed
-            currentCity.uvIndex = response.clouds.all
+            currentCity.lat = response.coord.lat
+            currentCity.lon = response.coord.lon
                 console.log(currentCity)
 
+//GET the UV Index, we need to do this separately as far as i can tell
+    var apiKey = "85855026c109c5b4381b76fd68c05b8e"
+    var queryURLUV = "http://api.openweathermap.org/data/2.5/uvi?lat="+(currentCity.lat)+"&lon="+(currentCity.lon)+"&appid="+apiKey
+    console.log(queryURLUV)
+    $.ajax({
+        url: queryURLUV,
+        method: "GET"
+    }).then(function(response) {
+        console.log(response)
+    // // SET the `mainCard` UV TO THE RESPONSE VALUE
+            currentCity.uvIndex = response.value
+                console.log(currentCity.uvIndex)
         renderMainCard();
         storeCity(currentCity.name);
         storeCityArray();
     });
+});
 };
 
 //RENDER the content to the MAIN CARD FOR CURRENT WEATHER
@@ -141,10 +158,26 @@ function renderMainCard(){
     $(mainCardUVIndex).append($("<p>").text("UV Index: "+currentCity.uvIndex));
     };
 
-var clearButtonEl = $(".clearButton")
-console.log(clearButtonEl)
+
 clearButtonEl.on("click", function(event) {
     // localStorage.setItem("locallyStoredTimeArray", JSON.stringify([]));
     localStorage.clear();
     window.location.reload();
 });
+
+//GET Forecast weather
+function getFutureWeather(cityVar) {
+    var cityName = cityVar;
+    // var cityName = "Atlanta";
+        console.log(cityName)
+    var apiKey = "85855026c109c5b4381b76fd68c05b8e"
+    var queryURL = "https://api.openweathermap.org/data/2.5/forecast?q="+ cityName + "&appid=" + apiKey;
+    console.log(queryURL)
+
+    $.ajax({
+        url: queryURL,
+        method: "GET"
+    }).then(function(response) {
+        console.log(response)
+    });
+};
