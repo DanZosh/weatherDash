@@ -79,7 +79,8 @@ var newCity = searchButtonEl.on("click", function(event) {
 // Calling renderButtons which handles the processing of our `citiesArray`
     renderCities();
     getWeather(cityCapitalized);
-    storeCity(cityCapitalized)
+    storeCity(cityCapitalized);
+    storeCityArray();
     return
 });
 
@@ -109,16 +110,33 @@ function getWeather(cityVar) {
             currentCity.uvIndex = response.clouds.all
                 console.log(currentCity)
 
-        renderMainCard()
-        storeCity(currentCity.name)
+        renderMainCard();
+        storeCity(currentCity.name);
+        storeCityArray();
     });
 };
 function renderMainCard(){
     console.log(currentCity.name)
+    //DAN NOTE: there is an opportunity here to create an array and do a for loop for all these short functions; low priority, get it functioning first and come back if you can.
+
+    mainCardCity.innerHTML="";
+    $(mainCardCity).empty()
     $(mainCardCity).append($("<p>").text("City Name: "+currentCity.name));
+
+    mainCardTemperature.innerHTML="";
+    $(mainCardTemperature).empty()
     $(mainCardTemperature).append($("<p>").text("Temperature: "+currentCity.temperature));
+
+    mainCardHumidity.innerHTML="";
+    $(mainCardHumidity).empty()
     $(mainCardHumidity).append($("<p>").text("Humidity: "+currentCity.humidity));
+
+    mainCardWindSpeed.innerHTML="";
+    $(mainCardWindSpeed).empty()
     $(mainCardWindSpeed).append($("<p>").text("Wind Speed: "+currentCity.windSpeed));
+
+    mainCardUVIndex.innerHTML="";
+    $(mainCardUVIndex).empty()
     $(mainCardUVIndex).append($("<p>").text("UV Index: "+currentCity.uvIndex));
     };
 
