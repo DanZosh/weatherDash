@@ -33,9 +33,12 @@ var currentCity = {
     lat:"",
     lon:"",
 }
-var nextDays= []
-    console.log(nextDays)
-
+var nextDaysDate= []
+    console.log(nextDaysDate)
+var nextDaysTemp= []
+    console.log(nextDaysTemp)
+var nextDaysHumidity= []
+    console.log(nextDaysHumidity)
 
 //START
     init();
@@ -77,7 +80,7 @@ var newCity = searchButtonEl.on("click", function(event) {
 // This line of code will grab the input from the `citySearchEl`
     // var cityLower = citySearchEl.val().trim().toLowerCase();
     //     console.log(cityLower)
-     var cityCapitalized = citySearchEl.val().trim();
+    var cityCapitalized = citySearchEl.val().trim();
         console.log(cityCapitalized)
 // The city from the `citySearchEl` is then added to our array
     citiesArray.unshift(cityCapitalized);
@@ -180,15 +183,26 @@ function getFutureWeather(cityVar) {
         console.log(response.list)
         //GET the unix dates
         for (let i = 0; i < 40; i+=8) {
-            var element = moment(response.list[i].dt,"X").format("MMM Do, YYYY HH");
-                console.log(element);
-            nextDays.push(element);
+//GET the next unix dates and convert to something readable
+            var nextDate = moment(response.list[i].dt,"X").format("MMM Do, YYYY HH");
+                console.log(nextDate);
+            nextDaysDate.push(nextDate);
+// GET the next temperatures and convert to F
+            var nextTemp = (Math.ceil((response.list[i].main.temp)- 273.15) * 1.80 + 32)
+                console.log(nextTemp)
+            nextDaysTemp.push(nextTemp)
+// GET the next humidity
+            var nextHumidity = response.list[i].main.humidity
+                console.log(nextHumidity)
+            nextDaysHumidity.push(nextHumidity)
         }
-            console.log(nextDays)
-
+            console.log(nextDaysDate)
+            console.log(nextDaysTemp)
+            console.log(nextDaysHumidity)
     });
 };
 
+// (Math.ceil((currentCity.temperature - 273.15) * 1.80 + 32))
 // TEST JUNK BELOW
 // timeVar=1549312452
 // convertUnix()
