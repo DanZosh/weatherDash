@@ -33,16 +33,16 @@ var currentCity = {
         console.log(currentCity)
 
     init();
-    //CHECK if there are already items stored in local storage.
+    //CHECK if there is already a `storedCitiesArray` in local storage.
     function init(){
-        var storedCurrentCity = localStorage.getItem("locallyStoredCurrentCity");
-            console.log(storedCurrentCity);
-        if (storedCurrentCity && storedCurrentCity !== ""){
-        //if true, then, replace currentCity with storedCurrentCity
-        currentCity=JSON.parse(storedCurrentCity);
+        var storedCitiesArray = localStorage.getItem("storedCitiesArray");
+            console.log(storedCitiesArray);
+        if (storedCitiesArray && storedCitiesArray !== ""){
+        //if true, then, replace `citiesArray` with `storedCitiesArray`
+        citiesArray=JSON.parse(storedCitiesArray);
             
         }
-        // renderMainCard();
+        renderCities();
     }
 
 function storeCity(boop){
@@ -74,7 +74,7 @@ var newCity = searchButtonEl.on("click", function(event) {
      var cityCapitalized = citySearchEl.val().trim();
         console.log(cityCapitalized)
 // The city from the `citySearchEl` is then added to our array
-    citiesArray.push(cityCapitalized);
+    citiesArray.unshift(cityCapitalized);
 
 // Calling renderButtons which handles the processing of our `citiesArray`
     renderCities();
