@@ -145,7 +145,7 @@ function renderMainCard(){
 
     mainCardCity.innerHTML="";
     $(mainCardCity).empty()
-    $(mainCardCity).append($("<p>").text("City Name: "+currentCity.name));
+    $(mainCardCity).append($("<p>").text(currentCity.name +" ("+ moment().format("M/D/YYYY")+")"));
 
     mainCardTemperature.innerHTML="";
     $(mainCardTemperature).empty()
@@ -187,7 +187,7 @@ function getFutureWeather(cityVar) {
         //GET the unix dates
         for (let i = 0; i < 40; i+=8) {
 //GET the next unix dates and convert to something readable
-            var nextDate = moment(response.list[i].dt,"X").format("MMM Do, YYYY");
+            var nextDate = moment(response.list[i].dt,"X").format("M/D/YY");
                 console.log(nextDate);
             nextDaysDate.push(nextDate);
 // GET the next temperatures and convert to F
