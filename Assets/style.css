@@ -5,6 +5,12 @@
     --gray: #c6cbc9;
     --dark_grey: #9999a0;
     --jumbotron_grey: #343a40;
+
+    --uvLow: #00b050;
+    --uvMedium: #ffff00;
+    --uvHigh: #ff9933;
+    --uvVeryHigh: #c00000;
+    --uvExtremelyHigh: #d39dd3;
 }
 .jumbotron{
     background-color: var(--jumbotron_grey);
@@ -16,4 +22,20 @@
 }
 .card-text:last-child{
     margin-bottom: 1rem;
+}
+
+.uvLow{
+    background-color: var(--uvLow);
+}
+.uvMedium{
+    background-color: var(--uvMedium);
+}
+.uvHigh{
+    background-color: var(--uvHigh);
+}
+.uvVeryHigh{
+    background-color: var(--uvVeryHigh);
+}
+.uvExtremelyHigh{
+    background-color: var(--uvExtremelyHigh);
 }

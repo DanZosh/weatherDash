@@ -11,6 +11,8 @@ var clearButtonEl = $(".clearButton")
 //THESE ARE THE CARD DOM ELEMENTS
     var mainCardCity = $(".mainCardCity");
         // console.log(mainCardCity)
+    var mainCardIcon= $(".mainCardIcon");
+        // console.log(mainCardCity)
     var mainCardTemperature = $(".mainCardTemperature");
         // console.log(mainCardTemperature)
     var mainCardHumidity = $(".mainCardHumidity");
@@ -34,6 +36,7 @@ var currentCity = {
     uvIndex:"",
     lat:"",
     lon:"",
+    icon:"",
 }
 var nextDaysDate= []
     console.log(nextDaysDate)
@@ -41,7 +44,8 @@ var nextDaysTemp= []
     console.log(nextDaysTemp)
 var nextDaysHumidity= []
     console.log(nextDaysHumidity)
-
+    var nextDaysIcon= []
+    console.log(nextDaysIcon)
 
 //START
     init();
@@ -117,6 +121,7 @@ function getWeather(cityVar) {
             currentCity.windSpeed = response.wind.speed
             currentCity.lat = response.coord.lat
             currentCity.lon = response.coord.lon
+            currentCity.icon = response.weather.icon
                 console.log(currentCity)
 
 //GET the UV Index, we need to do this separately as far as i can tell
@@ -162,6 +167,11 @@ function renderMainCard(){
     mainCardUVIndex.innerHTML="";
     $(mainCardUVIndex).empty()
     $(mainCardUVIndex).append($("<p>").text("UV Index: "+currentCity.uvIndex));
+
+    mainCardIcon.innerHTML="";
+    $(mainCardIcon).empty()
+    $(mainCardIcon).append($("<p>").text(currentCity.icon));
+//DAN YOU STOPPED HERE
     };
 
 
