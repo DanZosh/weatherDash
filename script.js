@@ -152,7 +152,7 @@ function renderMainCard(){
 
     mainCardCity.innerHTML="";
     $(mainCardCity).empty()
-    $(mainCardCity).append($("<p>").text(currentCity.name +" ("+ moment().format("M/D/YYYY")+")"));
+    $(mainCardCity).append($("<p>").addClass("mainCardCity my-0").text(currentCity.name +" ("+ moment().format("M/D/YYYY")+")"));
 
     mainCardTemperature.innerHTML="";
     $(mainCardTemperature).empty()
@@ -176,7 +176,7 @@ function renderMainCard(){
     //Create an SRC link 
     var iconUrl = "http://openweathermap.org/img/w/" + currentCity.icon + ".png"
     //CREATE dynamically an image element with the attribute `src` and value of `iconURL`
-    var imageIcon = $("<img>").attr("src", iconUrl)
+    var imageIcon = $("<img>").attr("src", iconUrl).height(40).width(40)
     //APPEND the `mainCardIcon` div with `imageIcon`
     $(mainCardIcon).append(imageIcon);
 
@@ -209,17 +209,17 @@ function getFutureWeather(cityVar) {
                 console.log(nextDate);
             nextDaysDate.push(nextDate);
 // GET the next temperatures and convert to F
-            var nextTemp = (Math.ceil((response.list[i].main.temp)- 273.15) * 1.80 + 32)
-                console.log(nextTemp)
-            nextDaysTemp.push(nextTemp)
+            var nextTemp = Math.round((((((response.list[i].main.temp)- 273.15) * 1.80) + 32)));
+                console.log(nextTemp);
+            nextDaysTemp.push(nextTemp);
 // GET the next humidity
-            var nextHumidity = response.list[i].main.humidity
-                console.log(nextHumidity)
-            nextDaysHumidity.push(nextHumidity)
+            var nextHumidity = response.list[i].main.humidity;
+                console.log(nextHumidity);
+            nextDaysHumidity.push(nextHumidity);
         }
-            console.log(nextDaysDate)
-            console.log(nextDaysTemp)
-            console.log(nextDaysHumidity)
+            console.log(nextDaysDate);
+            console.log(nextDaysTemp);
+            console.log(nextDaysHumidity);
             renderFutureWeather()
     });
 };
