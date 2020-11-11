@@ -58,7 +58,8 @@ var nextDaysIcon= []
         //if true, then, replace `citiesArray` with `storedCitiesArray`
         citiesArray=JSON.parse(storedCitiesArray);
         }
-        renderCities();
+        getWeather("Miami");
+        getFutureWeather("Miami")
     }
 //STORE locally the current `currentCity`
 function storeCity(boop){
@@ -138,6 +139,7 @@ function getWeather(cityVar) {
     // // SET the `mainCard` UV TO THE RESPONSE VALUE
             currentCity.uvIndex = response.value
                 console.log(currentCity.uvIndex)
+
         renderMainCard();
         storeCity(currentCity.name);
         storeCityArray();
@@ -166,9 +168,28 @@ function renderMainCard(){
     $(mainCardWindSpeed).empty()
     $(mainCardWindSpeed).append($("<p>").text("Wind Speed: "+currentCity.windSpeed+" MPH"));
 
+// NOW FOR THE UV VALUE
+    uvColorCode=""
+        console.log(uvColorCode)
+        console.log(currentCity)
+        console.log(currentCity.uvIndex)
+    if(currentCity.uvIndex<3){
+        uvColorCode = "uvLow"
+    }else if(currentCity.uvIndex >=3 && currentCity.uvIndex <6){
+        uvColorCode = "uvMedium"
+    }else if(currentCity.uvIndex >=6 && currentCity.uvIndex <8){
+        uvColorCode = "uvHigh"
+    }else if(currentCity.uvIndex >=8 && currentCity.uvIndex <11){
+        uvColorCode = "uvVeryHigh"
+    }else if(currentCity.uvIndex >11){
+        uvColorCode = "uvExtremelyHigh"
+    }
+        console.log(uvColorCode)
+
     mainCardUVIndex.innerHTML="";
     $(mainCardUVIndex).empty()
-    $(mainCardUVIndex).append($("<p>").text("UV Index: "+currentCity.uvIndex));
+    $(mainCardUVIndex).append($("<p>").text("UV Index: "+currentCity.uvIndex).addClass(uvColorCode))
+    ;
 
     //NOW FOR THE ICON
     //EMPTY any previous `img` stored in the div
