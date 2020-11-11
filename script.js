@@ -191,6 +191,19 @@ clearButtonEl.on("click", function(event) {
 
 //GET Forecast weather
 function getFutureWeather(cityVar) {
+//EMPTY the arrays of content from previous calls
+    nextDaysDate= []
+        console.log("next days date: " + nextDaysDate)
+    nextDaysTemp= []
+        console.log(nextDaysTemp)
+    nextDaysHumidity= []
+        console.log(nextDaysHumidity)
+    nextDaysIcon= []
+        console.log(nextDaysIcon)
+
+
+
+
     var cityName = cityVar;
         console.log(cityName)
     var apiKey = "85855026c109c5b4381b76fd68c05b8e"
@@ -206,20 +219,25 @@ function getFutureWeather(cityVar) {
         for (let i = 0; i < 40; i+=8) {
 //GET the next unix dates and convert to something readable
             var nextDate = moment(response.list[i].dt,"X").format("M/D/YY");
-                console.log(nextDate);
+                // console.log(nextDate);
             nextDaysDate.push(nextDate);
 // GET the next temperatures and convert to F
             var nextTemp = Math.round((((((response.list[i].main.temp)- 273.15) * 1.80) + 32)));
-                console.log(nextTemp);
+                // console.log(nextTemp);
             nextDaysTemp.push(nextTemp);
 // GET the next humidity
             var nextHumidity = response.list[i].main.humidity;
-                console.log(nextHumidity);
+                // console.log(nextHumidity);
             nextDaysHumidity.push(nextHumidity);
+// GET the next icons
+            var nextIcon = response.list[i].weather[0].icon;
+                // console.log(nextIcon);
+            nextDaysIcon.push(nextIcon);
         }
-            console.log(nextDaysDate);
+            console.log("next days date: " + nextDaysDate);
             console.log(nextDaysTemp);
             console.log(nextDaysHumidity);
+            console.log(nextDaysIcon);
             renderFutureWeather()
     });
 };
@@ -247,5 +265,34 @@ function renderFutureWeather(){
         $("#humidity"+i).append($("<p>").text("Humidity: "+nextDaysHumidity[i]+" %"))
         
     }
+
+//LOOP through the `icon` cards and append with matching index of `nextDaysIcon`
+
+for (let i = 0; i < 5; i++) {
+//EMPTY any previous `img` stored in the div
+    $("#icon"+i).empty()
+    console.log($("#icon"+i))
+//Create an SRC link 
+    var iconUrlForecast = "http://openweathermap.org/img/w/" + nextDaysIcon[i] + ".png";
+        console.log(iconUrlForecast)
+//CREATE dynamically an image element with the attribute `src` and value of `iconURL`
+    var imageIconForecast = $("<img>").attr("src", iconUrlForecast).height(40).width(40);
+        console.log(imageIconForecast)
+//APPEND the `"#icon"+i` div with `imageIcon`
+    $("#icon"+i).append(imageIconForecast);
+}
+
+//RESOURCE BELOW
+    // //NOW FOR THE ICON
+    // //EMPTY any previous `img` stored in the div
+    // $(mainCardIcon).empty()
+    // //Create an SRC link 
+    // var iconUrl = "http://openweathermap.org/img/w/" + currentCity.icon + ".png"
+    // //CREATE dynamically an image element with the attribute `src` and value of `iconURL`
+    // var imageIcon = $("<img>").attr("src", iconUrl).height(40).width(40)
+    // //APPEND the `mainCardIcon` div with `imageIcon`
+    // $(mainCardIcon).append(imageIcon);
+
+
 
     };
