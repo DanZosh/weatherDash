@@ -23,7 +23,7 @@ var clearButtonEl = $(".clearButton")
         // console.log(mainCardUVIndex)
 //THESE ARE THE FORECAST DOM ELEMENTS        
     var fiveDayForecastEl = $("#fiveDayForecastEl")
-        console.log(fiveDayForecastEl)
+        // console.log(fiveDayForecastEl)
 // Assemble: Create/select global variables 
 // var citiesArray = ["Austin", "Chicago", "New York", "Orlando", "San Francisco", "Seattle", "Denver", "atlanta"]
 var citiesArray = []
@@ -38,14 +38,15 @@ var currentCity = {
     lon:"",
     icon:"",
 }
+
 var nextDaysDate= []
-    console.log(nextDaysDate)
+    // console.log(nextDaysDate)
 var nextDaysTemp= []
-    console.log(nextDaysTemp)
+    // console.log(nextDaysTemp)
 var nextDaysHumidity= []
-    console.log(nextDaysHumidity)
-    var nextDaysIcon= []
-    console.log(nextDaysIcon)
+    // console.log(nextDaysHumidity)
+var nextDaysIcon= []
+    // console.log(nextDaysIcon)
 
 //START
     init();
@@ -121,8 +122,9 @@ function getWeather(cityVar) {
             currentCity.windSpeed = response.wind.speed
             currentCity.lat = response.coord.lat
             currentCity.lon = response.coord.lon
-            currentCity.icon = response.weather.icon
-                console.log(currentCity)
+            currentCity.icon = response.weather[0].icon
+                // console.log(currentCity)
+                // console.log(currentCity.icon)
 
 //GET the UV Index, we need to do this separately as far as i can tell
     var apiKey = "85855026c109c5b4381b76fd68c05b8e"
@@ -168,10 +170,16 @@ function renderMainCard(){
     $(mainCardUVIndex).empty()
     $(mainCardUVIndex).append($("<p>").text("UV Index: "+currentCity.uvIndex));
 
-    mainCardIcon.innerHTML="";
+    //NOW FOR THE ICON
+    //EMPTY any previous `img` stored in the div
     $(mainCardIcon).empty()
-    $(mainCardIcon).append($("<p>").text(currentCity.icon));
-//DAN YOU STOPPED HERE
+    //Create an SRC link 
+    var iconUrl = "http://openweathermap.org/img/w/" + currentCity.icon + ".png"
+    //CREATE dynamically an image element with the attribute `src` and value of `iconURL`
+    var imageIcon = $("<img>").attr("src", iconUrl)
+    //APPEND the `mainCardIcon` div with `imageIcon`
+    $(mainCardIcon).append(imageIcon);
+
     };
 
 
@@ -232,7 +240,7 @@ function renderFutureWeather(){
         $("#temp"+i).append($("<p>").text("Temp: "+nextDaysTemp[i]+" F"))
         
     }
-//LOOP through the `humidityi` cards and append with matching index of `nextDaysHumidity`
+//LOOP through the `humidity` cards and append with matching index of `nextDaysHumidity`
     for (let i = 0; i < 5; i++) {
         $("#humidity"+i).innerHTML="";
         $("#humidity"+i).empty()
