@@ -59,7 +59,8 @@ var nextDaysIcon= []
         citiesArray=JSON.parse(storedCitiesArray);
         }
         getWeather("Miami");
-        getFutureWeather("Miami")
+        getFutureWeather("Miami");
+        renderCities();
     }
 //STORE locally the current `currentCity`
 function storeCity(boop){
@@ -303,17 +304,16 @@ for (let i = 0; i < 5; i++) {
     $("#icon"+i).append(imageIconForecast);
 }
 
-//RESOURCE BELOW
-    // //NOW FOR THE ICON
-    // //EMPTY any previous `img` stored in the div
-    // $(mainCardIcon).empty()
-    // //Create an SRC link 
-    // var iconUrl = "http://openweathermap.org/img/w/" + currentCity.icon + ".png"
-    // //CREATE dynamically an image element with the attribute `src` and value of `iconURL`
-    // var imageIcon = $("<img>").attr("src", iconUrl).height(40).width(40)
-    // //APPEND the `mainCardIcon` div with `imageIcon`
-    // $(mainCardIcon).append(imageIcon);
-
-
-
     };
+
+    //CLICK FUNCTIONALITY OF THE UL
+cityListEl.on("click", function(event) {
+    event.preventDefault();
+    event.stopPropagation();
+        console.log(this)
+    var renderedCityEl = $(event.target).text()
+        console.log(renderedCityEl)
+    getWeather(renderedCityEl);
+    getFutureWeather(renderedCityEl)
+
+});
