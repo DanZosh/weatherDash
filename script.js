@@ -130,7 +130,7 @@ function getWeather(cityVar) {
 
 //GET the UV Index, we need to do this separately as far as i can tell
     var apiKey = "85855026c109c5b4381b76fd68c05b8e"
-    var queryURLUV = "http://api.openweathermap.org/data/2.5/uvi?lat="+(currentCity.lat)+"&lon="+(currentCity.lon)+"&appid="+apiKey
+    var queryURLUV = "https://api.openweathermap.org/data/2.5/uvi?lat="+(currentCity.lat)+"&lon="+(currentCity.lon)+"&appid="+apiKey
     console.log(queryURLUV)
     $.ajax({
         url: queryURLUV,
@@ -195,7 +195,7 @@ function renderMainCard(){
     //EMPTY any previous `img` stored in the div
     $(mainCardIcon).empty()
     //Create an SRC link 
-    var iconUrl = "http://openweathermap.org/img/w/" + currentCity.icon + ".png"
+    var iconUrl = "https://openweathermap.org/img/w/" + currentCity.icon + ".png"
     //CREATE dynamically an image element with the attribute `src` and value of `iconURL`
     var imageIcon = $("<img>").attr("src", iconUrl).height(40).width(40)
     //APPEND the `mainCardIcon` div with `imageIcon`
@@ -289,7 +289,7 @@ for (let i = 0; i < 5; i++) {
     $("#icon"+i).empty();
     console.log($("#icon"+i));
 //Create an SRC link 
-    var iconUrlForecast = "http://openweathermap.org/img/w/" + nextDaysIcon[i] + ".png";
+    var iconUrlForecast = "https://openweathermap.org/img/w/" + nextDaysIcon[i] + ".png";
         // console.log(iconUrlForecast)
 //CREATE dynamically an image element with the attribute `src` and value of `iconURL`
     var imageIconForecast = $("<img>").attr("src", iconUrlForecast).height(40).width(40);
