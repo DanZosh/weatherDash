@@ -232,7 +232,7 @@ function getFutureWeather(cityVar) {
     }).then(function(response) {
         console.log(response.list)
         //GET the unix dates
-        for (let i = 4; i < 40; i+=8) {
+        for (let i = 6; i < 40; i+=8) {
 //GET the next unix dates and convert to something readable
             var nextDate = moment(response.list[i].dt,"X").format("M/D/YY");
                 // console.log(nextDate);
