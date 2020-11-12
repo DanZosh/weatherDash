@@ -21,7 +21,7 @@ THEN one is presented with the last searched city forecast
 ```
 
 ## LINK
-[link to take the quiz]()
+[link to see the weather](https://danzosh.github.io/weatherDash/)
 
 ## JS CODE
 ![JS CODE SCREENSHOT](/Assets/screenShots/jscode.png)
