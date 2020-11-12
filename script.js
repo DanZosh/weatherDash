@@ -24,8 +24,8 @@ var clearButtonEl = $(".clearButton")
 //THESE ARE THE FORECAST DOM ELEMENTS        
     var fiveDayForecastEl = $("#fiveDayForecastEl")
         // console.log(fiveDayForecastEl)
+
 // Assemble: Create/select global variables 
-// var citiesArray = ["Austin", "Chicago", "New York", "Orlando", "San Francisco", "Seattle", "Denver", "atlanta"]
 var citiesArray = []
     console.log(citiesArray)
 var currentCity = {
@@ -185,12 +185,11 @@ function renderMainCard(){
     }else if(currentCity.uvIndex >11){
         uvColorCode = "uvExtremelyHigh"
     }
-        console.log(uvColorCode)
+        // console.log(uvColorCode)
 
     mainCardUVIndex.innerHTML="";
     $(mainCardUVIndex).empty()
-    $(mainCardUVIndex).append($("<p>").text("UV Index: "+currentCity.uvIndex).addClass(uvColorCode))
-    ;
+    $(mainCardUVIndex).append($("<p>").text("UV Index: "+currentCity.uvIndex).addClass(uvColorCode));
 
     //NOW FOR THE ICON
     //EMPTY any previous `img` stored in the div
@@ -201,9 +200,7 @@ function renderMainCard(){
     var imageIcon = $("<img>").attr("src", iconUrl).height(40).width(40)
     //APPEND the `mainCardIcon` div with `imageIcon`
     $(mainCardIcon).append(imageIcon);
-
-    };
-
+};
 
 clearButtonEl.on("click", function(event) {
     // localStorage.setItem("locallyStoredTimeArray", JSON.stringify([]));
@@ -223,9 +220,6 @@ function getFutureWeather(cityVar) {
     nextDaysIcon= []
         console.log(nextDaysIcon)
 
-
-
-
     var cityName = cityVar;
         console.log(cityName)
     var apiKey = "85855026c109c5b4381b76fd68c05b8e"
@@ -238,7 +232,7 @@ function getFutureWeather(cityVar) {
     }).then(function(response) {
         console.log(response.list)
         //GET the unix dates
-        for (let i = 0; i < 40; i+=8) {
+        for (let i = 4; i < 40; i+=8) {
 //GET the next unix dates and convert to something readable
             var nextDate = moment(response.list[i].dt,"X").format("M/D/YY");
                 // console.log(nextDate);
@@ -292,14 +286,14 @@ function renderFutureWeather(){
 
 for (let i = 0; i < 5; i++) {
 //EMPTY any previous `img` stored in the div
-    $("#icon"+i).empty()
-    console.log($("#icon"+i))
+    $("#icon"+i).empty();
+    console.log($("#icon"+i));
 //Create an SRC link 
     var iconUrlForecast = "http://openweathermap.org/img/w/" + nextDaysIcon[i] + ".png";
-        console.log(iconUrlForecast)
+        // console.log(iconUrlForecast)
 //CREATE dynamically an image element with the attribute `src` and value of `iconURL`
     var imageIconForecast = $("<img>").attr("src", iconUrlForecast).height(40).width(40);
-        console.log(imageIconForecast)
+        // console.log(imageIconForecast)
 //APPEND the `"#icon"+i` div with `imageIcon`
     $("#icon"+i).append(imageIconForecast);
 }
@@ -310,9 +304,9 @@ for (let i = 0; i < 5; i++) {
 cityListEl.on("click", function(event) {
     event.preventDefault();
     event.stopPropagation();
-        console.log(this)
+        // console.log(this)
     var renderedCityEl = $(event.target).text()
-        console.log(renderedCityEl)
+        // console.log(renderedCityEl)
     getWeather(renderedCityEl);
     getFutureWeather(renderedCityEl)
 
