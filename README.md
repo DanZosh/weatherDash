@@ -5,7 +5,7 @@ This is a simple weather tracking app that shows and stores weather data for a c
 ## HOW TO USE:
 
 ```
-GIVEN a weather dashboard with form inputs
+GIVEN a weather dashboard with form inputs thats already displaying where you want to be right now, Miami the land of eternal summer.
 WHEN one searches for a city
 THEN one is presented with current and future conditions for that city and that city is added to the search history
 WHEN one views current weather conditions for that city
